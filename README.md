@@ -1,6 +1,31 @@
-# Proton Drive for Android
+# Proton Drive
 
-Copyright (c) 2023 Proton AG
+This repository contains:
+- **Android version**: Original Proton Drive for Android (Kotlin/Android)
+- **Linux Desktop version**: NEW - Proton Drive for Linux x64 (Kotlin/Compose Multiplatform)
+
+Copyright (c) 2023-2025 Proton AG
+
+---
+
+## 🐧 Linux Desktop Version (NEW!)
+
+**[Go to Linux Desktop →](linux-desktop/)**
+
+A native desktop application for Linux x64 (Ubuntu 24.04+) with full sync features.
+
+### Quick Start (Linux)
+
+```bash
+cd linux-desktop
+./build.sh run
+```
+
+See [linux-desktop/README.md](linux-desktop/README.md) for full documentation.
+
+---
+
+## 📱 Android Version
 
 ## License
 
