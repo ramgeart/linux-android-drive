@@ -1,0 +1,97 @@
+app-id: me.proton.Drive
+runtime: org.freedesktop.Platform
+runtime-version: '23.08'
+sdk: org.freedesktop.Sdk
+sdk-extensions:
+  - org.freedesktop.Sdk.Extension.openjdk17
+command: proton-drive
+finish-args:
+  - --share=ipc
+  - --socket=x11
+  - --socket=wayland
+  - --share=network
+  - --filesystem=home
+  - --talk-name=org.freedesktop.Notifications
+  - --talk-name=org.freedesktop.secrets
+  - --own-name=me.proton.Drive
+
+modules:
+  - name: openjdk
+    buildsystem: simple
+    build-commands:
+      - /usr/lib/sdk/openjdk17/install.sh
+
+  - name: proton-drive
+    buildsystem: simple
+    build-commands:
+      - mkdir -p /app/bin
+      - mkdir -p /app/lib
+      - cp -r * /app/lib/proton-drive
+      - |
+        cat > /app/bin/proton-drive <<EOF
+        #!/bin/sh
+        exec /app/jre/bin/java -jar /app/lib/proton-drive/lib/app.jar "\$@"
+        EOF
+      - chmod +x /app/bin/proton-drive
+      - install -Dm644 me.proton.Drive.desktop /app/share/applications/me.proton.Drive.desktop
+      - install -Dm644 me.proton.Drive.metainfo.xml /app/share/metainfo/me.proton.Drive.metainfo.xml
+      - install -Dm644 icon.png /app/share/icons/hicolor/256x256/apps/me.proton.Drive.png
+    sources:
+      - type: dir
+        path: app/build/compose/binaries/main/app
+
+  - name: desktop-file
+    buildsystem: simple
+    build-commands:
+      - |
+        cat > me.proton.Drive.desktop <<EOF
+        [Desktop Entry]
+        Type=Application
+        Name=Proton Drive
+        Comment=Secure cloud storage with end-to-end encryption
+        Exec=proton-drive
+        Icon=me.proton.Drive
+        Categories=Network;FileTransfer;
+        Terminal=false
+        StartupNotify=true
+        EOF
+      - install -Dm644 me.proton.Drive.desktop /app/share/applications/me.proton.Drive.desktop
+    sources:
+      - type: inline
+        contents: ""
+
+  - name: appdata
+    buildsystem: simple
+    build-commands:
+      - |
+        cat > me.proton.Drive.metainfo.xml <<EOF
+        <?xml version="1.0" encoding="UTF-8"?>
+        <component type="desktop-application">
+          <id>me.proton.Drive</id>
+          <name>Proton Drive</name>
+          <summary>Secure cloud storage with end-to-end encryption</summary>
+          <description>
+            <p>
+              Proton Drive is a secure cloud storage service with end-to-end encryption.
+              This desktop application allows you to sync your files automatically between
+              your computer and Proton Drive.
+            </p>
+          </description>
+          <launchable type="desktop-id">me.proton.Drive.desktop</launchable>
+          <url type="homepage">https://proton.me/drive</url>
+          <metadata_license>CC0-1.0</metadata_license>
+          <project_license>GPL-3.0-or-later</project_license>
+          <developer_name>Proton AG</developer_name>
+          <releases>
+            <release version="1.0.0" date="2025-01-01">
+              <description>
+                <p>Initial release of Proton Drive for Linux</p>
+              </description>
+            </release>
+          </releases>
+        </component>
+        EOF
+      - install -Dm644 me.proton.Drive.metainfo.xml /app/share/metainfo/me.proton.Drive.metainfo.xml
+    sources:
+      - type: inline
+        contents: ""
