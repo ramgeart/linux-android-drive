@@ -19,12 +19,14 @@
 plugins {
     kotlin("multiplatform")
     id("org.jetbrains.compose")
+    id("org.jetbrains.kotlin.plugin.compose")
     kotlin("plugin.serialization")
 }
 
 kotlin {
+    jvmToolchain(17)
+    
     jvm {
-        jvmToolchain(17)
         withJava()
     }
     
@@ -83,7 +85,7 @@ compose.desktop {
             vendor = "Proton AG"
             
             linux {
-                iconFile.set(project.file("src/jvmMain/resources/icon.png"))
+                // iconFile.set(project.file("src/jvmMain/resources/icon.png"))
                 packageName = "proton-drive"
                 debMaintainer = "Proton AG <support@proton.me>"
                 menuGroup = "Network"

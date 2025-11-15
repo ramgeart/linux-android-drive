@@ -16,6 +16,8 @@
  * along with Proton Drive.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+@file:OptIn(ExperimentalMaterial3Api::class)
+
 package me.proton.drive.linux
 
 import androidx.compose.desktop.ui.tooling.preview.Preview

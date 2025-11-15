@@ -20,6 +20,7 @@ package me.proton.drive.linux.database
 
 import org.jetbrains.exposed.dao.id.LongIdTable
 import org.jetbrains.exposed.sql.*
+import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.transactions.transaction
 import java.nio.file.Path
 
@@ -59,7 +60,7 @@ class DatabaseManager(dbPath: Path) {
     }
     
     fun getFileByLinkId(linkId: String): FileMetadata? = transaction {
-        Files.select { Files.linkId eq linkId }
+        Files.selectAll().where { Files.linkId eq linkId }
             .map { row ->
                 FileMetadata(
                     linkId = row[Files.linkId],
