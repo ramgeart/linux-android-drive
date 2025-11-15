@@ -14,3 +14,13 @@ captures/
 config/
 app/variables.env
 
+# Linux desktop build artifacts
+linux-desktop/build/
+linux-desktop/.gradle/
+linux-desktop/*/build/
+linux-desktop/build-dir/
+linux-desktop/export/
+linux-desktop/*.flatpak
+linux-desktop/dist/
+linux-desktop/.kotlin/
+
